@@ -3,7 +3,7 @@ import 'package:growmind_admin/core/utils/constants.dart';
 import 'package:growmind_admin/features/category/presentation/pages/category_page.dart';
 import 'package:growmind_admin/features/profile/presentation/pages/admin_profile_page.dart';
 import 'package:growmind_admin/features/tutors/presentation/pages/tutors_page.dart';
-import 'package:growmind_admin/home.dart';
+import 'package:growmind_admin/features/home/presentation/pages/home.dart';
 
 final GlobalKey<NavigatorState> navigationKey = GlobalKey<NavigatorState>();
 

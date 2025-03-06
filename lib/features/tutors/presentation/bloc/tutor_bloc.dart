@@ -13,7 +13,7 @@ class TutorBloc extends Bloc<TutorEvent, TutorState> {
       try {
         final tutors = await getTutors.call();
         final filteredTutor =
-            tutors.where((tutor) => tutor.status != 'rejected').toList();
+            tutors.where((tutor) => tutor.status != 'rejected'  ).toList();
         emit(TutorLoaded(filteredTutor));
       } catch (e) {
         emit(TutorError(e.toString()));

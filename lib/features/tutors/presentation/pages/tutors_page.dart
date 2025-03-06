@@ -175,7 +175,7 @@ class TutorsPage extends StatelessWidget {
                   child: Text('No tutor available'),
                 );
               })),
-             const Text('Hello'),
+             
             
             ],
 
