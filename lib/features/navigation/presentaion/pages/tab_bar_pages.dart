@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:growmind_admin/core/utils/constants.dart';
 import 'package:growmind_admin/features/category/presentation/pages/category_page.dart';
-import 'package:growmind_admin/features/profile/presentation/pages/admin_profile_page.dart';
+import 'package:growmind_admin/features/exit/presentation/pages/exit_page.dart';
 import 'package:growmind_admin/features/tutors/presentation/pages/tutors_page.dart';
 import 'package:growmind_admin/features/home/presentation/pages/home.dart';
 
@@ -21,7 +21,7 @@ class _TabBarPagesAdminState extends State<TabBarPagesAdmin> {
     const Home(),
     const TutorsPage(),
     const CategoryPage(),
-    const AdminProfilePage(),
+    const ExitPage(),
   ];
 
   void setPage(int index) {
@@ -103,7 +103,7 @@ Widget buildDrawer() {
           buildListTile(0, 'Home', const Icon(Icons.home)),
           buildListTile(1, 'Tutors', const Icon(Icons.school)),
           buildListTile(2, 'Categories', const Icon(Icons.category)),
-          buildListTile(3, 'Profile', const Icon(Icons.person)),
+          buildListTile(3, 'Leave', const Icon(Icons.exit_to_app)),
         ],
       ),
     ),
@@ -149,7 +149,7 @@ class _PresistentStateState extends State<PresistentState> {
           buildListTile(0, 'Home', const Icon(Icons.home)),
           buildListTile(1, 'Tutors', const Icon(Icons.school)),
           buildListTile(2, 'Categories', const Icon(Icons.category)),
-          buildListTile(3, 'Profile', const Icon(Icons.person)),
+          buildListTile(3, 'Leave', const Icon(Icons.exit_to_app)),
         ],
       ),
     );

@@ -19,6 +19,13 @@ import 'package:growmind_admin/features/category/presentation/bloc/category_bloc
 import 'package:growmind_admin/features/category/presentation/bloc/fetch_category_bloc/fetch_category_bloc.dart';
 import 'package:growmind_admin/features/category/presentation/bloc/fetch_subcategory/fetch_subcategory_bloc.dart';
 import 'package:growmind_admin/features/category/presentation/bloc/subcategory_bloc/subcategory_bloc.dart';
+import 'package:growmind_admin/features/home/data/datasource/admin_datasource.dart';
+import 'package:growmind_admin/features/home/data/datasource/admin_datasource_impl.dart';
+import 'package:growmind_admin/features/home/data/repository_impl/admin_repo_impl.dart';
+import 'package:growmind_admin/features/home/domain/repositories/admin_repositories.dart';
+import 'package:growmind_admin/features/home/domain/usecases/get_admin_usecases.dart';
+import 'package:growmind_admin/features/home/presentation/bloc/admin_bloc/admin_bloc.dart';
+
 
 final getIt = GetIt.instance;
 //  data layer
@@ -42,6 +49,10 @@ void setUp() {
       () => SubcategoryRemoteDatasource(getIt<FirebaseFirestore>()));
   getIt.registerLazySingleton<FetchSubcatRepo>(() => FetchSubcategoryRepoImpl(
       getIt<SubcategoryRemoteDatasource>(), getIt<FirebaseFirestore>()));
+  getIt.registerLazySingleton<AdminDatasource>(
+      () => AdminDatasourceImpl(getIt<FirebaseFirestore>()));
+  getIt.registerLazySingleton<AdminRepositories>(
+      () => AdminRepoImpl(getIt<AdminDatasource>()));
 
 // domain layer
 
@@ -53,6 +64,8 @@ void setUp() {
   getIt.registerLazySingleton(
       () => SubcategoryUsecases(getIt<SubcategoryRepo>()));
   getIt.registerLazySingleton(() => GetSubcategory(getIt<FetchSubcatRepo>()));
+  getIt.registerLazySingleton(
+      () => GetAdminUsecases(getIt<AdminRepositories>()));
 
   //  presentation layer
   getIt.registerFactory(() => CategoryBloc(
@@ -64,4 +77,5 @@ void setUp() {
   getIt.registerFactory(() => SubcategoryBloc(getIt<SubcategoryUsecases>()));
 
   getIt.registerFactory(() => FetchSubcategoryBloc(getIt<GetSubcategory>()));
+  getIt.registerFactory(() => AdminBloc(getIt<GetAdminUsecases>()));
 }

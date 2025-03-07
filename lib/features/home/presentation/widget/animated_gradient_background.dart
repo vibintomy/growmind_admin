@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:growmind_admin/features/home/presentation/bloc/admin_bloc/admin_bloc.dart';
+import 'package:growmind_admin/features/home/presentation/bloc/admin_bloc/admin_event.dart';
+import 'package:growmind_admin/features/home/presentation/bloc/admin_bloc/admin_state.dart';
 
 class AnimatedGradientBackground extends StatefulWidget {
   const AnimatedGradientBackground({super.key});
@@ -85,6 +89,7 @@ class _AnimatedGradientBackgroundState extends State<AnimatedGradientBackground>
 
   @override
   Widget build(BuildContext context) {
+    context.read<AdminBloc>().add(GetAdminEvent());
     return AnimatedBuilder(
         animation: _controller,
         builder: (context, _) {
@@ -92,6 +97,7 @@ class _AnimatedGradientBackgroundState extends State<AnimatedGradientBackground>
             padding: const EdgeInsets.symmetric(horizontal: 30),
             alignment: Alignment.center,
             decoration: BoxDecoration(
+              borderRadius: BorderRadius.all(Radius.circular(30)),
                 gradient: LinearGradient(
                     begin: _topAlignment.value,
                     end: _bottomAlignment.value,
@@ -99,6 +105,29 @@ class _AnimatedGradientBackgroundState extends State<AnimatedGradientBackground>
                   Color(0xffF99E43),
                   Color(0xffDA2323),
                 ])),
+            child:
+                BlocBuilder<AdminBloc, AdminState>(builder: (context, state) {
+              if (state is AdminLoading) {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              } else if (state is AdminLoaded) {
+                final newContainer = state.adminEntities;
+                return Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment:  CrossAxisAlignment.center,
+                  children: [
+                 const   Text('Total Sales ',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 35,color: Colors.white),),
+                    Text(newContainer.totalRevenue.toString(),style:const TextStyle(fontSize: 40,fontWeight: FontWeight.bold,color: Colors.white),),
+                    
+                  ],
+                );
+              } else {
+                return const Center(
+                  child: Text('No values found '),
+                );
+              }
+            }),
           );
         });
   }

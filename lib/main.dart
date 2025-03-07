@@ -13,6 +13,8 @@ import 'package:growmind_admin/features/category/presentation/bloc/fetch_subcate
 import 'package:growmind_admin/features/category/presentation/bloc/subcategory_bloc/subcategory_bloc.dart';
 import 'package:growmind_admin/features/category/presentation/pages/category_page.dart';
 import 'package:growmind_admin/features/category/presentation/widgets/displayCourse_widget.dart';
+import 'package:growmind_admin/features/home/domain/usecases/get_admin_usecases.dart';
+import 'package:growmind_admin/features/home/presentation/bloc/admin_bloc/admin_bloc.dart';
 import 'package:growmind_admin/features/navigation/presentaion/pages/tab_bar_pages.dart';
 import 'package:growmind_admin/features/tutors/data/datasource/tutor_remote_datasource.dart';
 import 'package:growmind_admin/features/tutors/data/repo/tutor_repositories_impl.dart';
@@ -20,6 +22,7 @@ import 'package:growmind_admin/features/tutors/domain/usecases/get_tutors.dart';
 import 'package:growmind_admin/features/tutors/presentation/bloc/tutor_bloc.dart';
 import 'package:growmind_admin/features/tutors/presentation/bloc/tutor_event.dart';
 import 'package:growmind_admin/firebase_options.dart';
+import 'package:growmind_admin/splash_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -55,11 +58,12 @@ class MyWebApp extends StatelessWidget {
          child: const CategoryPage(),),
          BlocProvider(create: (context)=> SubcategoryBloc(getIt<SubcategoryUsecases>()),
          child: displayCourse(),),
-         BlocProvider(create: (context)=> FetchSubcategoryBloc(getIt<GetSubcategory>()),child: displayCourse(),)
+         BlocProvider(create: (context)=> FetchSubcategoryBloc(getIt<GetSubcategory>()),child: displayCourse(),),
+         BlocProvider(create: (context)=> AdminBloc(getIt<GetAdminUsecases>()))
         ],
         child: MaterialApp(
           debugShowCheckedModeBanner: false,
-          home: TabBarPagesAdmin(),
+          home: SplashScreen(),
         ));
   }
 }
