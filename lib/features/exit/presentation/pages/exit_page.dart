@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:growmind_admin/splash_screen.dart';
 
 class ExitPage extends StatelessWidget {
   const ExitPage({super.key});
@@ -7,36 +8,54 @@ class ExitPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Center(
-            child: Container(
-              decoration: const BoxDecoration(
-                borderRadius: BorderRadius.all(Radius.circular(15)),
-                boxShadow: [BoxShadow(
-                  offset: Offset(0, 3),
-                  color: Colors.grey,
-                  blurRadius: 3,
-                  spreadRadius: 0
-                )],
-                color: Colors.white
-              ),
-              height: 100,
-              width: 400,
-              child:const Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Icon(Icons.exit_to_app,size: 70,color: Colors.red,),
-                      Text('Exit to the Login Page',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 30,),)
+            child: GestureDetector(
+              onTap: () {
+                Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(builder: (context) => SplashScreen()),
+                    (Route<dynamic> route) => false);
+              },
+              child: Container(
+                decoration: const BoxDecoration(
+                    borderRadius: BorderRadius.all(Radius.circular(15)),
+                    boxShadow: [
+                      BoxShadow(
+                          offset: Offset(0, 3),
+                          color: Colors.grey,
+                          blurRadius: 3,
+                          spreadRadius: 0)
                     ],
-                  )
-                ],
+                    color: Colors.white),
+                height: 100,
+                width: 400,
+                child: const Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.exit_to_app,
+                          size: 70,
+                          color: Colors.red,
+                        ),
+                        Text(
+                          'Exit to the Login Page',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 30,
+                          ),
+                        )
+                      ],
+                    )
+                  ],
+                ),
               ),
             ),
           )

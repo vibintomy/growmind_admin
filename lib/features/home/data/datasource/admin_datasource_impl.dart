@@ -12,23 +12,39 @@ class AdminDatasourceImpl implements AdminDatasource {
       final DocumentReference adminRef =
           firebaseFirestore.collection('admin').doc('stats');
       final DocumentSnapshot documentSnapshot = await adminRef.get();
+
       if (!documentSnapshot.exists) {
         throw Exception('No user found for the current data');
       }
+
       final Map<String, dynamic> data =
           documentSnapshot.data() as Map<String, dynamic>;
+
       final int totalRevenue = data['totalRevenue'] ?? 0;
-      final Map<String, dynamic> courseData = data['courses'] ?? {};
+      final Map<String, dynamic> courseData = 
+          (data['courses'] is Map<String, dynamic>) ? data['courses'] : {};
+
+      // Ensure courses have valid structure
+      List<MapEntry<String, dynamic>> sortedCourses = courseData.entries
+          .where((entry) => entry.value is Map<String, dynamic>) // Avoid invalid data
+          .toList()
+          ..sort((a, b) => (b.value['purchases'] ?? 0).compareTo(a.value['purchases'] ?? 0));
+
+      // Get the top 5 courses based on purchases
       Map<String, CourseState> courses = {};
-      courseData.forEach((key, value) {
-        courses[key] = CourseState(
-            name: value['name'] ?? '',
-            purchase: value['purchase'] ?? 0,
-            revenue: value['revenue'] ?? 0);
-      });
+      for (var entry in sortedCourses.take(5)) {
+        final value = entry.value as Map<String, dynamic>;
+        courses[entry.key] = CourseState(
+          name: value['name'] ?? 'Unknown',
+          purchase: value['purchases'] ?? 0,
+          revenue: value['revenue'] ?? 0,
+        );
+      }
+
       return AdminEntities(totalRevenue: totalRevenue, course: courses);
-    } catch (e) {
-      throw Exception('Failed to get the values from the admin');
+    } catch (e, stackTrace) {
+      print('Error fetching admin stats: $e\nStack Trace: $stackTrace');
+      throw Exception('Failed to retrieve admin statistics: $e');
     }
   }
 }

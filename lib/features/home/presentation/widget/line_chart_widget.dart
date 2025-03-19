@@ -424,7 +424,7 @@ class DailyRevenueChartPage extends StatelessWidget {
   }
 }
 
-// Example usage with debug display to help troubleshoot data issues
+
 class DebugChartPage extends StatelessWidget {
   final Map<String, dynamic> data;
   

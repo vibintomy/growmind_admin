@@ -6,7 +6,6 @@ import 'package:growmind_admin/features/home/presentation/bloc/admin_bloc/admin_
 import 'package:growmind_admin/features/home/presentation/bloc/admin_bloc/admin_state.dart';
 import 'package:growmind_admin/features/home/presentation/widget/animated_gradient_background.dart';
 import 'package:growmind_admin/features/home/presentation/widget/line_chart_widget.dart';
-import 'package:growmind_admin/features/home/presentation/widget/neo_digital_screen.dart';
 import 'package:growmind_admin/features/home/presentation/widget/syncfusion_flutter_charts.dart';
 
 class Home extends StatelessWidget {
@@ -20,23 +19,13 @@ class Home extends StatelessWidget {
         padding: const EdgeInsets.all(8.0),
         child: Column(
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Align(
-                    alignment: Alignment.topLeft,
-                    child: Text(
-                      'Welcome back Admin,\n Glad to see you',
-                      style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-                    )),
-                SizedBox(
-                  height: 50,
-                  width: 150,
-                  child: NeoDigitalScreen(),
-                )
-              ],
-            ),
+        const    Align(
+                alignment: Alignment.topLeft,
+                child: Text(
+                  'Welcome back Admin,\n Glad to see you',
+                  style:
+                      TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                )),
             Row(
               children: [
                 BlocBuilder<AdminBloc, AdminState>(builder: (context, state) {
@@ -54,31 +43,46 @@ class Home extends StatelessWidget {
                       ),
                     );
                   } else {
-                    return Center(
+                    return const Center(
                       child: Text('no data found'),
                     );
                   }
                 }),
-                SizedBox(
+                const SizedBox(
                   width: 20,
                 ),
                 Container(
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                       borderRadius: BorderRadius.all(Radius.circular(100))),
                   height: 300,
                   width: 400,
-                  child: AnimatedGradientBackground(),
+                  child: const AnimatedGradientBackground(),
                 )
               ],
             ),
-            SizedBox(
-              height: 10,
+            const SizedBox(
+              height: 30,
             ),
-            SizedBox(
-              height: 250,
-              width: 500,
-              child: SyncfusionRadicalChart(),
-            )
+            const Text('Top selling courses',style: TextStyle(fontSize: 25,fontWeight: FontWeight.bold),),
+          
+                BlocBuilder<AdminBloc, AdminState>(builder: (context, state) {
+                  if (state is AdminLoaded) {
+                
+                    final AdminEntities entities = state.adminEntities;
+                    return Align(
+                      alignment: Alignment.topCenter,
+                      child: SizedBox(
+                        height: 250,
+                        width: 500,
+                        child: SyncfusionRadialChart(adminEntities: entities)
+                      ),
+                    );
+                  } else {
+                    return const Center(
+                      child: Text('no data found'),
+                    );
+                  }
+                }),
           ],
         ),
       ),

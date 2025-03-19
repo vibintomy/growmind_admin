@@ -118,8 +118,8 @@ class _AnimatedGradientBackgroundState extends State<AnimatedGradientBackground>
                   crossAxisAlignment:  CrossAxisAlignment.center,
                   children: [
                  const   Text('Total Sales ',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 35,color: Colors.white),),
-                    Text(newContainer.totalRevenue.toString(),style:const TextStyle(fontSize: 40,fontWeight: FontWeight.bold,color: Colors.white),),
-                    
+                    Text('₹ ${newContainer.totalRevenue.toString()}',style:const TextStyle(fontSize: 40,fontWeight: FontWeight.bold,color: Colors.white),),
+                   
                   ],
                 );
               } else {
